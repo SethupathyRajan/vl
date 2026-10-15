@@ -1,0 +1,30 @@
+NFS server:
+    sudo apt install nfs-kernel-server -y
+    sudo mkdir -p /srv/nfs/sharedfolder
+    sudo exportfs -ra
+    sudo systemctl restart nfs-kernel-server
+
+NFS client:
+    sudo apt install nfs-common -y
+    sudo mkdir -p /mnt/nfs/sharedfolder
+    sudo mount -t nfs UBUNTU_HOST_ONLY_IP:/srv/nfs/sharedfolder /mnt/nfs/sharedfolder
+
+Always replace example IPs with actual Host-only IPs
+
+6) Shared Folder – Minimal Commands  
+
+devices -> insert guest cd and shared folder setting add Win folders
+
+ls /media
+
+sudo usermod -aG vboxsf $USER
+
+sudo reboot
+
+ls /media/sf_VMShared
+
+cp VM1.txt /media/sf_VMShared/
+
+ls /media/sf_VMShared
+
+cat the all txt files.

@@ -1,0 +1,8 @@
+1. Create/check test file: nano file.java
+2. Verify file: ls -l file.java ; cat file.java
+3. Shut down VM: sudo poweroff
+4. VirtualBox source: File -> Export Appliance -> choose OVA -> Export
+5. Copy the .ova file to the destination host.
+6. VirtualBox destination: File -> Import Appliance -> choose .ova -> Import
+7. Start imported VM.
+8. Verify: ls -l file.java ; cat file.java

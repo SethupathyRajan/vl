@@ -1,0 +1,2 @@
+Live migration: XenCenter -> Add Server 1 -> Add a VM -> right-click running
+VM -> Migrate/Move VM -> select destination -> confirm -> verify VM on destination.

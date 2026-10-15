@@ -1,0 +1,46 @@
+
+ENABLE HYPER-V (WINDOWS CLIENT)
+
+1. Open Start and search for: Turn Windows features on or off.
+2. Select Hyper-V and enable its available subfeatures:
+   - Hyper-V Management Tools
+   - Hyper-V Platform
+3. Click OK and restart Windows when prompted.
+4. Search Start for Hyper-V Manager and open it.
+5. Select your computer in the left pane.
+6. Open Virtual Switch Manager.
+7. Use "Default Switch" if it exists, or create a suitable switch.
+
+CREATE A VM USING HYPER-V MANAGER
+
+1. Open Hyper-V Manager.
+2. Right-click your computer name > New > Virtual Machine.
+3. Enter a VM name, e.g. UbuntuLab.
+4. Choose Generation 2 for a modern Ubuntu ISO.
+5. Assign memory. Use 2048 MB only if the host has enough free RAM; 4096 MB
+   is preferable for a desktop Ubuntu guest.
+6. Select a virtual switch, such as Default Switch, if available.
+7. Create a virtual hard disk, e.g. 20–30 GB.
+8. Select "Install an operating system from a bootable CD/DVD-ROM" and browse
+   to the Ubuntu ISO.
+9. Finish the wizard.
+10. Right-click the VM > Settings if you need to adjust RAM, CPU, network, or ISO.
+11. Right-click the VM > Connect, then click Start.
+12. Complete the Ubuntu installation in the VM console.
+
+OR
+
+Powershell
+Get-VMSwitch
+
+New-VM -Name "VM1" -MemoryStartupBytes 1GB -Generation 2 -NewVHDPath "C:\Hyper-V\VM1.vhdx" -NewVHDSizeBytes 20GB
+
+Connect-VMNetworkAdapter -VMName "VM1" -SwitchName "Default Switch"
+
+Add-VMDvdDrive -VMName "VM1" -Path "C:\Path\Ubuntu.iso"
+
+Start-VM -Name "VM1"
+
+Get-VM -Name "VM1"
+
+Stop-VM -Name "VM1"

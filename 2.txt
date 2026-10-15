@@ -1,0 +1,36 @@
+2a)
+java -version
+javac -version
+
+sudo apt update
+sudo apt install default-jdk -y
+
+nano Main.java
+
+public class Main {
+    public static void main(String[] args) {
+        long start = System.nanoTime();
+
+        long sum = 0;
+        for (long i = 1; i <= 1_000_000_000L; i++) {
+            sum += i;
+        }
+
+        long end = System.nanoTime();
+        double time = (end - start) / 1_000_000_000.0;
+
+        System.out.println("Sum = " + sum);
+        System.out.println("Execution Time = " + time + " seconds");
+    }
+}
+
+javac Main.java
+java Main
+
+
+2b)
+Both VM should be on Host-only network, Change Settings
+
+ip -4 addr
+
+ping -c 4 <VMIP>

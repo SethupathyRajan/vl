@@ -1,0 +1,52 @@
+EXPERIMENT 10 — VHD CREATION AND LVM STORAGE VIRTUALIZATION
+
+PART A — CREATE VHD ON WINDOWS
+
+1. Press Win + R -> type diskmgmt.msc.
+2. Disk Management -> Action -> Create VHD.
+3. Choose location, size (e.g., 2 GB), VHD/VHDX, and Dynamically expanding -> OK.
+4. Right-click the new disk -> Initialize Disk.
+5. Right-click Unallocated space -> New Simple Volume -> assign drive letter -> format NTFS.
+6. To move it: right-click the VHD disk label -> Detach VHD.
+7. Copy the .vhd/.vhdx file to the second Windows host.
+8. On the second host: diskmgmt.msc -> Action -> Attach VHD -> select file.
+9. Assign a drive letter if needed and verify the files.
+
+PART B — STORAGE VIRTUALIZATION USING LVM
+
+1. VirtualBox -> VM Settings -> Storage -> Add Hard Disk -> Create.
+2. Choose VDI -> Dynamically allocated -> 7 GB -> Finish.
+3. Start Ubuntu and inspect disks/LVM:
+
+sudo -i
+lsblk
+pvs
+vgs
+lvs
+
+4. Identify the new empty disk by size. The example below assumes /dev/sdb.
+   DO NOT use /dev/sdb unless you have confirmed it is the new disk.
+
+pvcreate /dev/sdb
+vgextend ubuntu-vg /dev/sdb
+lvextend -L +3G /dev/ubuntu-vg/root
+resize2fs /dev/ubuntu-vg/root
+
+5. Verify the result:
+
+df -h /
+lsblk
+pvs
+vgs
+lvs
+
+NOTES
+- Take a VirtualBox snapshot before changing LVM.
+- Replace /dev/sdb, ubuntu-vg, and /dev/ubuntu-vg/root if your actual names differ.
+- Run resize2fs only if the root filesystem is ext4.
+- Never run pvcreate on the existing system disk or a disk containing data.
+
+RESULT
+A VHD/VHDX is created and attached on another Windows host. In Ubuntu, an
+additional virtual disk is added to LVM, the root logical volume is extended
+by 3 GB, and the filesystem size is verified.
